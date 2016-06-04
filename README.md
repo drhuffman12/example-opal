@@ -15,9 +15,19 @@ rake build
 ```
 
 
-
-
 # Tutorial Steps
 
 ## Initial Setup
 
+### Sum of Cubes
+
+* `app/conway.com`
+
+```
+require 'opal'
+
+x = (0..3).map do |n|
+  n * n * n
+end.reduce(:+)
+puts x
+```
