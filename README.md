@@ -10,8 +10,16 @@ Fix for Rakefile:
 
 ## (RE-)Build
 
+##### manually:
+
 ```
 rake build
+```
+
+##### automatially (via Guard):
+
+```
+bundle exec guard
 ```
 
 
@@ -21,7 +29,7 @@ rake build
 
 ### Sum of Cubes
 
-* `app/conway.com`
+##### `# app/conway.com`:
 
 ```
 require 'opal'
@@ -31,3 +39,5 @@ x = (0..3).map do |n|
 end.reduce(:+)
 puts x
 ```
+
+![Sum of Cubes](doc/images/sum_of_cubes.png "Sum of Cubes")
