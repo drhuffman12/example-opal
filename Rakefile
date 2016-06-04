@@ -1,12 +1,7 @@
 require 'opal'
-require 'opal-jquery'
 
-desc "Build our app to conway.js"
+desc "Build our app to build.js"
 task :build do
-  env = Opal::Environment.new
-  env.append_path "app"
-
-  File.open("conway.js", "w+") do |out|
-    out << env["conway"].to_s
-  end
+  Opal.append_path "app"
+  File.binwrite "conway.js", Opal::Builder.build("conway").to_s
 end
