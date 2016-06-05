@@ -30,10 +30,30 @@ Open `index.html` in browser.
 
 # Tutorial Steps
 
-## Initial Setup
+## Initial Setup & 'Sum of Cubes':
 
-### Sum of Cubes
+A simple Hello World via outputting a sum of cubes to the JS console.
 
-See files under `doc/example_steps/1_sum_of_cubes`
+See files under `doc/example_steps/0_sum_of_cubes`
 
 ![Sum of Cubes](doc/example_steps/0_sum_of_cubes/screenshot.png "Sum of Cubes")
+
+## Drawing a Blank Grid
+
+Grid lines to cover entire growser viewport.
+
+See files under `doc/example_steps/1_drawing_blank_grid`
+
+![Drawing a Blank Grid](doc/example_steps/1_drawing_blank_grid/screenshot.png "Drawing a Blank Grid")
+
+## Adding Some Interactivity
+
+Click a cell to fill or clear it.
+
+See files under `doc/example_steps/2_click_to_toggle`
+
+![Drawing a Blank Grid](doc/example_steps/2_click_to_toggle/screenshot.png "Drawing a Blank Grid")
+
+
+# See also:
+* [Wrapping JavaScript library with Opal](https://ilyabylich.svbtle.com/wrapping-javascript-library-with-opal)
