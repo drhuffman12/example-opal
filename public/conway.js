@@ -22093,7 +22093,7 @@ if (name == null) name = nil;if (value == null) value = nil;
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $range = Opal.range, $klass = Opal.klass, $hash2 = Opal.hash2, grid = nil;
 
-  Opal.add_stubs(['$require', '$reduce', '$map', '$*', '$puts', '$sum_of_cubes', '$attr_reader', '$canvas_id', '$canvas', '$floor', '$/', '$height', '$width', '$add_mouse_event_listener', '$draw_canvas', '$>=', '$context', '$+', '$fill_cell', '$-', '$page_x', '$page_y', '$[]', '$Document', '$scrollLeft', '$documentElement', '$scrollTop', '$body', '$new', '$on', '$get_cursor_position', '$x', '$y', '$find', '$unfill_cell']);
+  Opal.add_stubs(['$require', '$reduce', '$map', '$*', '$puts', '$sum_of_cubes', '$attr_reader', '$canvas_id', '$canvas', '$floor', '$/', '$height', '$width', '$update_cursor_style', '$draw_canvas', '$draw_rnd', '$add_mouse_event_listener', '$>=', '$context', '$+', '$fill_cell', '$[]', '$hex', '$rand', '$length', '$times', '$===', '$-', '$page_x', '$page_y', '$Document', '$scrollLeft', '$documentElement', '$scrollTop', '$body', '$new', '$on', '$chr', '$key_code', '$find', '$current_target', '$class', '$get_cursor_position', '$x', '$y', '$unfill_cell']);
   self.$require("opal");
   self.$require("lib/jquery");
   self.$require("lib/opal-jquery.js");
@@ -22121,7 +22121,10 @@ if (n == null) n = nil;
 
     var def = self.$$proto, $scope = self.$$scope;
 
+    def.hex = def.drawing_mode = nil;
     self.$attr_reader("height", "width", "canvas", "context", "max_x", "max_y");
+
+    self.$attr_reader("drawing_mode");
 
     Opal.cdecl($scope, 'CELL_HEIGHT', 15);
 
@@ -22142,9 +22145,12 @@ if (n == null) n = nil;
       self.context = self.$canvas().getContext('2d');
       self.max_x = ($rb_divide(self.$height(), $scope.get('CELL_HEIGHT'))).$floor();
       self.max_y = ($rb_divide(self.$width(), $scope.get('CELL_WIDTH'))).$floor();
-      console.log(self);
-      self.$add_mouse_event_listener();
-      return self.$draw_canvas();
+      self.drawing_mode = "off";
+      document.getElementById(self.$canvas_id()).focus();
+      self.$update_cursor_style();
+      self.$draw_canvas();
+      self.$draw_rnd(100);
+      return self.$add_mouse_event_listener();
     });
 
     Opal.defn(self, '$draw_canvas', function() {
@@ -22164,23 +22170,48 @@ if (n == null) n = nil;
       y = $rb_plus(y, $scope.get('CELL_HEIGHT'));};
       self.$context().strokeStyle = "lightgray";
       self.$context().stroke();
-      return self.$fill_cell(2, 3);
+      return self.$fill_cell(2, 3, "red");
     });
 
-    Opal.defn(self, '$fill_cell', function(x, y) {
+    Opal.defn(self, '$hex', function() {
+      var $a, self = this;
+
+      return ((($a = self.hex) !== false && $a !== nil) ? $a : self.hex = "0123456789abcdef");
+    });
+
+    Opal.defn(self, '$hex_rnd', function() {
       var self = this;
 
-      console.log($hash2(["method", "x", "y", "status"], {"method": "fill_cell", "x": x, "y": y, "status": "start"}));
+      return self.$hex()['$[]'](self.$rand(self.$hex().$length()));
+    });
+
+    Opal.defn(self, '$draw_rnd', function(qty) {
+      var $a, $b, TMP_2, self = this;
+
+      return ($a = ($b = qty).$times, $a.$$p = (TMP_2 = function(q){var self = TMP_2.$$s || this, x = nil, y = nil, colors = nil, c = nil;
+        if (self.max_x == null) self.max_x = nil;
+        if (self.max_y == null) self.max_y = nil;
+if (q == null) q = nil;
+      x = self.$rand(self.max_x);
+        y = self.$rand(self.max_y);
+        colors = ["red", "green", "blue"];
+        c = colors['$[]'](self.$rand(colors.$length()));
+        return self.$fill_cell(x, y, c);}, TMP_2.$$s = self, TMP_2), $a).call($b);
+    });
+
+    Opal.defn(self, '$fill_cell', function(x, y, c) {
+      var self = this, fill_style = nil, $case = nil;
+
       x = $rb_times(x, $scope.get('CELL_WIDTH'));
       y = $rb_times(y, $scope.get('CELL_HEIGHT'));
-      self.$context().fillStyle = "red";
+      fill_style = "\#{context}.fillStyle = \"\#{c}\"";
+      $case = c;if ("red"['$===']($case)) {self.$context().fillStyle = "red";}else if ("green"['$===']($case)) {self.$context().fillStyle = "green";}else if ("blue"['$===']($case)) {self.$context().fillStyle = "blue";}else if ("yellow"['$===']($case)) {self.$context().fillStyle = "yellow";}else {self.$context().fillStyle = "gray";};
       return self.$context().fillRect($rb_plus(x.$floor(), 1), $rb_plus(y.$floor(), 1), $rb_minus($scope.get('CELL_WIDTH'), 1), $rb_minus($scope.get('CELL_HEIGHT'), 1));
     });
 
     Opal.defn(self, '$unfill_cell', function(x, y) {
       var self = this;
 
-      console.log($hash2(["method", "x", "y", "status"], {"method": "unfill_cell", "x": x, "y": y, "status": "start"}));
       x = $rb_times(x, $scope.get('CELL_WIDTH'));
       y = $rb_times(y, $scope.get('CELL_HEIGHT'));
       return self.$context().clearRect($rb_plus(x.$floor(), 1), $rb_plus(y.$floor(), 1), $rb_minus($scope.get('CELL_WIDTH'), 1), $rb_minus($scope.get('CELL_HEIGHT'), 1));
@@ -22189,7 +22220,6 @@ if (n == null) n = nil;
     Opal.defn(self, '$get_cursor_position', function(event) {
       var $a, $b, self = this, x = nil, y = nil, doc = nil;
 
-      console.log(event);
       if ((($a = (($b = event.$page_x(), $b !== false && $b !== nil ?event.$page_y() : $b))) !== nil && (!$a.$$is_boolean || $a == true))) {
         x = event.$page_x();
         y = event.$page_y();
@@ -22205,19 +22235,32 @@ if (n == null) n = nil;
       return $scope.get('Coordinates').$new($hash2(["x", "y"], {"x": x, "y": y}));
     });
 
-    return (Opal.defn(self, '$add_mouse_event_listener', function() {
-      var $a, $b, TMP_2, $c, TMP_3, self = this;
+    Opal.defn(self, '$update_cursor_style', function() {
+      var self = this, $case = nil;
 
-      ($a = ($b = $scope.get('Element').$find("#" + (self.$canvas_id()))).$on, $a.$$p = (TMP_2 = function(event){var self = TMP_2.$$s || this, $a, coords = nil, x = nil, y = nil;
+      return (function() {$case = self.drawing_mode;if ("drawing"['$===']($case)) {return document.getElementById(self.$canvas_id()).style.cursor = 'copy';}else if ("erasing"['$===']($case)) {return document.getElementById(self.$canvas_id()).style.cursor = 'no-drop';}else if ("off"['$===']($case)) {return document.getElementById(self.$canvas_id()).style.cursor = 'crosshair';}else {return document.getElementById(self.$canvas_id()).style.cursor = 'crosshair';}})();
+    });
+
+    return (Opal.defn(self, '$add_mouse_event_listener', function() {
+      var $a, $b, TMP_3, $c, TMP_4, self = this;
+
+      ($a = ($b = $scope.get('Element').$find("#" + (self.$canvas_id()))).$on, $a.$$p = (TMP_3 = function(event){var self = TMP_3.$$s || this, $case = nil;
 if (event == null) event = nil;
-      coords = self.$get_cursor_position(event);
-        $a = [coords.$x(), coords.$y()], x = $a[0], y = $a[1], $a;
-        return self.$fill_cell(x, y);}, TMP_2.$$s = self, TMP_2), $a).call($b, "click");
-      return ($a = ($c = $scope.get('Element').$find("#" + (self.$canvas_id()))).$on, $a.$$p = (TMP_3 = function(event){var self = TMP_3.$$s || this, $a, coords = nil, x = nil, y = nil;
+      console.log(event.$key_code().$chr());
+        $case = event.$key_code().$chr();if ("D"['$===']($case)) {self.drawing_mode = "drawing"}else if ("E"['$===']($case)) {self.drawing_mode = "erasing"}else if ("S"['$===']($case)) {self.drawing_mode = "off"}else if ("1"['$===']($case)) {self.drawing_color = "red"}else if ("2"['$===']($case)) {self.drawing_color = "yellow"}else if ("3"['$===']($case)) {self.drawing_color = "green"}else if ("4"['$===']($case)) {self.drawing_color = "blue"}else {self.drawing_color = "white";
+        self.drawing_mode = "off";};
+        return self.$update_cursor_style();}, TMP_3.$$s = self, TMP_3), $a).call($b, "keydown");
+      return ($a = ($c = $scope.get('Element').$find("#" + (self.$canvas_id()))).$on, $a.$$p = (TMP_4 = function(event){var self = TMP_4.$$s || this, $a, coords = nil, x = nil, y = nil, $case = nil;
+        if (self.drawing_mode == null) self.drawing_mode = nil;
+        if (self.drawing_color == null) self.drawing_color = nil;
 if (event == null) event = nil;
-      coords = self.$get_cursor_position(event);
+      console.log(event);
+        console.log(event.$current_target());
+        console.log(event.$current_target().$class());
+        console.log(event.$current_target()['$[]']("style"));
+        coords = self.$get_cursor_position(event);
         $a = [coords.$x(), coords.$y()], x = $a[0], y = $a[1], $a;
-        return self.$unfill_cell(x, y);}, TMP_3.$$s = self, TMP_3), $a).call($c, "dblclick");
+        return (function() {$case = self.drawing_mode;if ("drawing"['$===']($case)) {return self.$fill_cell(x, y, self.drawing_color)}else if ("erasing"['$===']($case)) {return self.$unfill_cell(x, y)}else if ("off"['$===']($case)) {return nil}else { return nil }})();}, TMP_4.$$s = self, TMP_4), $a).call($c, "mousemove");
     }), nil) && 'add_mouse_event_listener';
   })($scope.base, null);
   return grid = $scope.get('Grid').$new();
