@@ -22,6 +22,11 @@ rake build
 bundle exec guard
 ```
 
+(Pressing <Enter> will force a re-build.)
+
+## (RE-)Run
+
+Open `index.html` in browser.
 
 # Tutorial Steps
 
@@ -29,15 +34,6 @@ bundle exec guard
 
 ### Sum of Cubes
 
-##### `# app/conway.com`:
+See files under `doc/example_steps/1_sum_of_cubes`
 
-```
-require 'opal'
-
-x = (0..3).map do |n|
-  n * n * n
-end.reduce(:+)
-puts x
-```
-
-![Sum of Cubes](doc/images/sum_of_cubes.png "Sum of Cubes")
+![Sum of Cubes](doc/example_steps/1_sum_of_cubes/screenshot.png "Sum of Cubes")
