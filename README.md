@@ -54,7 +54,17 @@ See files under `doc/example_steps/2_click_to_toggle`
 
 ![Drawing a Blank Grid](doc/example_steps/2_click_to_toggle/screenshot1.png "Drawing a Blank Grid")
 
+# Custom Steps
 
+## Simple Drawing Pad
+
+Click a cell to fill or clear it.
+
+See files under `doc/example_steps/3_draw_modes_and_colors`
+
+![Simple Drawing Pad](doc/example_steps/3_draw_modes_and_colors/screenshot.png "Simple Drawing Pad")
+
+--------
 # See also:
 * [Opal](http://opalrb.org/)
 * [Wrapping JavaScript library with Opal](https://ilyabylich.svbtle.com/wrapping-javascript-library-with-opal)
