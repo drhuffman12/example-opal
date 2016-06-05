@@ -46,7 +46,7 @@ class Grid
       y += CELL_HEIGHT
     end
 
-    `#{context}.strokeStyle = "#eee"`
+    `#{context}.strokeStyle = "lightgray"`
     `#{context}.stroke()`
   end
 

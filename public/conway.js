@@ -19180,7 +19180,7 @@ if (n == null) n = nil;
       self.$context().moveTo(0, y);
       self.$context().lineTo(self.$width(), y);
       y = $rb_plus(y, $scope.get('CELL_HEIGHT'));};
-      self.$context().strokeStyle = "#eee";
+      self.$context().strokeStyle = "lightgray";
       return self.$context().stroke();
     }), nil) && 'draw_canvas';
   })($scope.base, null);
