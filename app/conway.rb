@@ -1,5 +1,31 @@
 require 'opal'
+
+# Opal.append_path File.dirname(File.expand_path(`gem which opal-jquery`)).untaint
+which_opal_jquey = '~/.rvm/gems/ruby-2.3.1@opal/gems/opal-jquery-0.4.1/lib'
+Opal.append_path File.dirname(File.expand_path(which_opal_jquey)).untaint
+
 # require 'opal-jquery' # can't find file: "opal-jquery"
+require 'jquery'
+require 'opal-jquery'
+# require 'opal-jquery-element'
+
+# if RUBY_ENGINE == 'opal'
+#   require 'opal/jquery/window'
+#   require 'opal/jquery/document'
+#   require 'opal/jquery/element'
+#   require 'opal/jquery/event'
+#   require 'opal/jquery/http'
+#   require 'opal/jquery/kernel'
+#   # require 'opal'
+#   # which_opal_jquey = '~/.rvm/gems/ruby-2.3.1@opal/gems/opal-jquery-0.4.1/lib'
+#   # Opal.append_path File.dirname(File.expand_path(which_opal_jquey)).untaint
+# else
+#   require 'opal'
+#   require 'opal/jquery/version'
+#
+#   # Opal.append_path File.expand_path('../..', __FILE__).untaint
+#   # require 'opal-jquery'
+# end
 
 def sum_of_cubes
   x = (0..3).map do |n|
@@ -29,6 +55,8 @@ class Grid
     @context = `#{canvas}.getContext('2d')`
     @max_x   = (height / CELL_HEIGHT).floor
     @max_y   = (width / CELL_WIDTH).floor
+
+    # add_mouse_event_listener
   end
 
   def draw_canvas
@@ -70,10 +98,52 @@ class Grid
     `#{context}.clearRect(#{x.floor+1}, #{y.floor+1}, #{CELL_WIDTH-1}, #{CELL_HEIGHT-1})`
   end
 
+  def get_cursor_position(event)
+    `console.log(#{event})` # <- I cheated.
+    if (event.page_x && event.page_y)
+      x = event.page_x;
+      y = event.page_y;
+    else
+      doc = Opal.Document[0]
+      x = event[:clientX] + doc.scrollLeft +
+        doc.documentElement.scrollLeft;
+      y = event[:clientY] + doc.body.scrollTop +
+        doc.documentElement.scrollTop;
+    end
+
+    x -= `#{canvas}.offsetLeft`
+    y -= `#{canvas}.offsetTop`
+
+    x = (x / CELL_WIDTH).floor
+    y = (y / CELL_HEIGHT).floor
+
+    Coordinates.new(x: x, y: y)
+  end
+
+  def add_mouse_event_listener
+    Element.find("##{canvas_id}").on :click do |event|
+      coords = get_cursor_position(event)
+      x, y   = coords.x, coords.y
+      fill_cell(x, y)
+    end
+
+    Element.find("##{canvas_id}").on :dblclick do |event|
+      coords = get_cursor_position(event)
+      x, y   = coords.x, coords.y
+      unfill_cell(x, y)
+    end
+  end
+
 end
 
 grid = Grid.new
 puts "Grid height: #{grid.height}"
 puts "Grid width: #{grid.width}"
 puts "Grid canvas: #{grid.canvas}"
+# puts "Grid canvas.inspect: #{grid.canvas.inspect}"
+# `console.log(#{grid.canvas.inspect})`
+# puts grid.canvas.klass
+# puts JSON.stringify(grid.canvas)
 grid.draw_canvas
+grid.add_mouse_event_listener
+# grid.addEventListener("onclick", `alert("clicked")`, false)
