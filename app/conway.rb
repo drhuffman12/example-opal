@@ -9,6 +9,9 @@ def sum_of_cubes
 end
 sum_of_cubes
 
+require 'ostruct'
+class Coordinates < OpenStruct; end
+
 class Grid
   attr_reader :height, :width, :canvas, :context, :max_x, :max_y
 
@@ -48,6 +51,23 @@ class Grid
 
     `#{context}.strokeStyle = "lightgray"`
     `#{context}.stroke()`
+
+    fill_cell(2,3)
+  end
+
+  def fill_cell(x, y)
+    `console.log(#{ {method: 'fill_cell', x: x, y: y, status: 'start'}})`
+    x *= CELL_WIDTH;
+    y *= CELL_HEIGHT;
+    `#{context}.fillStyle = "red"`
+    `#{context}.fillRect(#{x.floor+1}, #{y.floor+1}, #{CELL_WIDTH-1}, #{CELL_HEIGHT-1})`
+    `console.log(#{ {method: 'fill_cell', x: x, y: y, status: 'done'}})`
+  end
+
+  def unfill_cell(x, y)
+    x *= CELL_WIDTH;
+    y *= CELL_HEIGHT;
+    `#{context}.clearRect(#{x.floor+1}, #{y.floor+1}, #{CELL_WIDTH-1}, #{CELL_HEIGHT-1})`
   end
 
 end
@@ -55,4 +75,5 @@ end
 grid = Grid.new
 puts "Grid height: #{grid.height}"
 puts "Grid width: #{grid.width}"
+puts "Grid canvas: #{grid.canvas}"
 grid.draw_canvas

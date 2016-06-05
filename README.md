@@ -45,3 +45,11 @@ Grid lines to cover entire growser viewport.
 See files under `doc/example_steps/1_drawing_blank_grid`
 
 ![Drawing a Blank Grid](doc/example_steps/1_drawing_blank_grid/screenshot.png "Drawing a Blank Grid")
+
+## Adding Some Interactivity
+
+Click a cell to fill or clear it.
+
+See files under `doc/example_steps/2_click_to_toggle`
+
+![Drawing a Blank Grid](doc/example_steps/2_click_to_toggle/screenshot.png "Drawing a Blank Grid")
