@@ -78,3 +78,4 @@ See files under `doc/example_steps/3_draw_modes_and_colors`
 * [a *tiny* Ruby implementation](https://gist.github.com/netmute/1761463)
 * [a Ruby implementation](https://github.com/andersondias/conway-game-of-life-ruby)
 * [a Rails implementation](https://github.com/davidesantangelo/gameoflife)
+* [Fun with Ruby Enumerators](https://romaimperator.com/?p=122) and [another Ruby implementation](https://github.com/romaimperator/conways_game_of_life)
