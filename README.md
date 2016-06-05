@@ -36,4 +36,4 @@ Open `index.html` in browser.
 
 See files under `doc/example_steps/1_sum_of_cubes`
 
-![Sum of Cubes](doc/example_steps/1_sum_of_cubes/screenshot.png "Sum of Cubes")
+![Sum of Cubes](doc/example_steps/0_sum_of_cubes/screenshot.png "Sum of Cubes")
