@@ -37,3 +37,11 @@ A simple Hello World via outputting a sum of cubes to the JS console.
 See files under `doc/example_steps/0_sum_of_cubes`
 
 ![Sum of Cubes](doc/example_steps/0_sum_of_cubes/screenshot.png "Sum of Cubes")
+
+## Drawing a Blank Grid
+
+Grid lines to cover entire growser viewport.
+
+See files under `doc/example_steps/1_drawing_blank_grid`
+
+![Drawing a Blank Grid](doc/example_steps/1_drawing_blank_grid/screenshot.png "Drawing a Blank Grid")

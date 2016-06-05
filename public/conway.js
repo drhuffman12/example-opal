@@ -19114,12 +19114,77 @@ Opal.modules["opal"] = function(Opal) {
   function $rb_times(lhs, rhs) {
     return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs * rhs : lhs['$*'](rhs);
   }
-  var $a, $b, TMP_1, self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $range = Opal.range, x = nil;
+  function $rb_divide(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs / rhs : lhs['$/'](rhs);
+  }
+  function $rb_ge(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs >= rhs : lhs['$>='](rhs);
+  }
+  function $rb_plus(lhs, rhs) {
+    return (typeof(lhs) === 'number' && typeof(rhs) === 'number') ? lhs + rhs : lhs['$+'](rhs);
+  }
+  var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $range = Opal.range, $klass = Opal.klass, grid = nil;
 
-  Opal.add_stubs(['$require', '$reduce', '$map', '$*', '$puts']);
+  Opal.add_stubs(['$require', '$reduce', '$map', '$*', '$puts', '$sum_of_cubes', '$attr_reader', '$canvas_id', '$canvas', '$floor', '$/', '$height', '$width', '$>=', '$context', '$+', '$new', '$draw_canvas']);
   self.$require("opal");
-  x = ($a = ($b = ($range(0, 3, false))).$map, $a.$$p = (TMP_1 = function(n){var self = TMP_1.$$s || this;
+  Opal.defn(Opal.Object, '$sum_of_cubes', function() {
+    var $a, $b, TMP_1, self = this, x = nil;
+
+    x = ($a = ($b = ($range(0, 3, false))).$map, $a.$$p = (TMP_1 = function(n){var self = TMP_1.$$s || this;
 if (n == null) n = nil;
-  return $rb_times($rb_times(n, n), n)}, TMP_1.$$s = self, TMP_1), $a).call($b).$reduce("+");
-  return self.$puts(x);
+    return $rb_times($rb_times(n, n), n)}, TMP_1.$$s = self, TMP_1), $a).call($b).$reduce("+");
+    return self.$puts(x);
+  });
+  self.$sum_of_cubes();
+  (function($base, $super) {
+    function $Grid(){};
+    var self = $Grid = $klass($base, $super, 'Grid', $Grid);
+
+    var def = self.$$proto, $scope = self.$$scope;
+
+    self.$attr_reader("height", "width", "canvas", "context", "max_x", "max_y");
+
+    Opal.cdecl($scope, 'CELL_HEIGHT', 15);
+
+    Opal.cdecl($scope, 'CELL_WIDTH', 15);
+
+    Opal.defn(self, '$initialize', function() {
+      var self = this;
+
+      self.height = $(window).height();
+      self.width = $(window).width();
+      self.canvas = document.getElementById(self.$canvas_id());
+      self.context = self.$canvas().getContext('2d');
+      self.max_x = ($rb_divide(self.$height(), $scope.get('CELL_HEIGHT'))).$floor();
+      return self.max_y = ($rb_divide(self.$width(), $scope.get('CELL_WIDTH'))).$floor();
+    });
+
+    Opal.defn(self, '$draw_canvas', function() {
+      var $a, $b, self = this, x = nil, y = nil;
+
+      self.$canvas().width  = self.$width();
+      self.$canvas().height = self.$height();
+      x = 0.5;
+      while (!((($b = $rb_ge(x, self.$width())) !== nil && (!$b.$$is_boolean || $b == true)))) {
+      self.$context().moveTo(x, 0);
+      self.$context().lineTo(x, self.$height());
+      x = $rb_plus(x, $scope.get('CELL_WIDTH'));};
+      y = 0.5;
+      while (!((($b = $rb_ge(y, self.$height())) !== nil && (!$b.$$is_boolean || $b == true)))) {
+      self.$context().moveTo(0, y);
+      self.$context().lineTo(self.$width(), y);
+      y = $rb_plus(y, $scope.get('CELL_HEIGHT'));};
+      self.$context().strokeStyle = "#eee";
+      return self.$context().stroke();
+    });
+
+    return (Opal.defn(self, '$canvas_id', function() {
+      var self = this;
+
+      return "conwayCanvas";
+    }), nil) && 'canvas_id';
+  })($scope.base, null);
+  grid = $scope.get('Grid').$new();
+  self.$puts("Grid width: " + (grid.$width()));
+  return grid.$draw_canvas();
 })(Opal);
