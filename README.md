@@ -37,4 +37,3 @@ A simple Hello World via outputting a sum of cubes to the JS console.
 See files under `doc/example_steps/0_sum_of_cubes`
 
 ![Sum of Cubes](doc/example_steps/0_sum_of_cubes/screenshot.png "Sum of Cubes")
-
