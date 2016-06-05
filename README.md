@@ -30,10 +30,11 @@ Open `index.html` in browser.
 
 # Tutorial Steps
 
-## Initial Setup
+## Initial Setup & 'Sum of Cubes':
 
-### Sum of Cubes
+A simple Hello World via outputting a sum of cubes to the JS console.
 
-See files under `doc/example_steps/1_sum_of_cubes`
+See files under `doc/example_steps/0_sum_of_cubes`
 
 ![Sum of Cubes](doc/example_steps/0_sum_of_cubes/screenshot.png "Sum of Cubes")
+
