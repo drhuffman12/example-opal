@@ -22093,7 +22093,7 @@ if (name == null) name = nil;if (value == null) value = nil;
   }
   var self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $range = Opal.range, $klass = Opal.klass, $hash2 = Opal.hash2, grid = nil;
 
-  Opal.add_stubs(['$require', '$reduce', '$map', '$*', '$puts', '$sum_of_cubes', '$attr_reader', '$canvas_id', '$canvas', '$floor', '$/', '$height', '$width', '$>=', '$context', '$+', '$fill_cell', '$-', '$page_x', '$page_y', '$[]', '$Document', '$scrollLeft', '$documentElement', '$scrollTop', '$body', '$new', '$on', '$get_cursor_position', '$x', '$y', '$find', '$unfill_cell', '$draw_canvas', '$add_mouse_event_listener']);
+  Opal.add_stubs(['$require', '$reduce', '$map', '$*', '$puts', '$sum_of_cubes', '$attr_reader', '$canvas_id', '$canvas', '$floor', '$/', '$height', '$width', '$add_mouse_event_listener', '$draw_canvas', '$>=', '$context', '$+', '$fill_cell', '$-', '$page_x', '$page_y', '$[]', '$Document', '$scrollLeft', '$documentElement', '$scrollTop', '$body', '$new', '$on', '$get_cursor_position', '$x', '$y', '$find', '$unfill_cell']);
   self.$require("opal");
   self.$require("lib/jquery");
   self.$require("lib/opal-jquery.js");
@@ -22141,7 +22141,10 @@ if (n == null) n = nil;
       self.canvas = document.getElementById(self.$canvas_id());
       self.context = self.$canvas().getContext('2d');
       self.max_x = ($rb_divide(self.$height(), $scope.get('CELL_HEIGHT'))).$floor();
-      return self.max_y = ($rb_divide(self.$width(), $scope.get('CELL_WIDTH'))).$floor();
+      self.max_y = ($rb_divide(self.$width(), $scope.get('CELL_WIDTH'))).$floor();
+      console.log(self);
+      self.$add_mouse_event_listener();
+      return self.$draw_canvas();
     });
 
     Opal.defn(self, '$draw_canvas', function() {
@@ -22171,13 +22174,13 @@ if (n == null) n = nil;
       x = $rb_times(x, $scope.get('CELL_WIDTH'));
       y = $rb_times(y, $scope.get('CELL_HEIGHT'));
       self.$context().fillStyle = "red";
-      self.$context().fillRect($rb_plus(x.$floor(), 1), $rb_plus(y.$floor(), 1), $rb_minus($scope.get('CELL_WIDTH'), 1), $rb_minus($scope.get('CELL_HEIGHT'), 1));
-      return console.log($hash2(["method", "x", "y", "status"], {"method": "fill_cell", "x": x, "y": y, "status": "done"}));
+      return self.$context().fillRect($rb_plus(x.$floor(), 1), $rb_plus(y.$floor(), 1), $rb_minus($scope.get('CELL_WIDTH'), 1), $rb_minus($scope.get('CELL_HEIGHT'), 1));
     });
 
     Opal.defn(self, '$unfill_cell', function(x, y) {
       var self = this;
 
+      console.log($hash2(["method", "x", "y", "status"], {"method": "unfill_cell", "x": x, "y": y, "status": "start"}));
       x = $rb_times(x, $scope.get('CELL_WIDTH'));
       y = $rb_times(y, $scope.get('CELL_HEIGHT'));
       return self.$context().clearRect($rb_plus(x.$floor(), 1), $rb_plus(y.$floor(), 1), $rb_minus($scope.get('CELL_WIDTH'), 1), $rb_minus($scope.get('CELL_HEIGHT'), 1));
@@ -22217,10 +22220,5 @@ if (event == null) event = nil;
         return self.$unfill_cell(x, y);}, TMP_3.$$s = self, TMP_3), $a).call($c, "dblclick");
     }), nil) && 'add_mouse_event_listener';
   })($scope.base, null);
-  grid = $scope.get('Grid').$new();
-  self.$puts("Grid height: " + (grid.$height()));
-  self.$puts("Grid width: " + (grid.$width()));
-  self.$puts("Grid canvas: " + (grid.$canvas()));
-  grid.$draw_canvas();
-  return grid.$add_mouse_event_listener();
+  return grid = $scope.get('Grid').$new();
 })(Opal);

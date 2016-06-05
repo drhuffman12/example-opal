@@ -52,8 +52,9 @@ Click a cell to fill or clear it.
 
 See files under `doc/example_steps/2_click_to_toggle`
 
-![Drawing a Blank Grid](doc/example_steps/2_click_to_toggle/screenshot.png "Drawing a Blank Grid")
+![Drawing a Blank Grid](doc/example_steps/2_click_to_toggle/screenshot1.png "Drawing a Blank Grid")
 
 
 # See also:
+* [Opal](http://opalrb.org/)
 * [Wrapping JavaScript library with Opal](https://ilyabylich.svbtle.com/wrapping-javascript-library-with-opal)

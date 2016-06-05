@@ -36,7 +36,11 @@ class Grid
     @max_x   = (height / CELL_HEIGHT).floor
     @max_y   = (width / CELL_WIDTH).floor
 
-    # add_mouse_event_listener
+    # puts "Grid canvas: #{self.canvas}"
+    `console.log(#{self})`
+
+    add_mouse_event_listener
+    draw_canvas
   end
 
   def draw_canvas
@@ -69,17 +73,18 @@ class Grid
     y *= CELL_HEIGHT;
     `#{context}.fillStyle = "red"`
     `#{context}.fillRect(#{x.floor+1}, #{y.floor+1}, #{CELL_WIDTH-1}, #{CELL_HEIGHT-1})`
-    `console.log(#{ {method: 'fill_cell', x: x, y: y, status: 'done'}})`
+    # `console.log(#{ {method: 'fill_cell', x: x, y: y, status: 'done'}})`
   end
 
   def unfill_cell(x, y)
+    `console.log(#{ {method: 'unfill_cell', x: x, y: y, status: 'start'}})`
     x *= CELL_WIDTH;
     y *= CELL_HEIGHT;
     `#{context}.clearRect(#{x.floor+1}, #{y.floor+1}, #{CELL_WIDTH-1}, #{CELL_HEIGHT-1})`
   end
 
   def get_cursor_position(event)
-    `console.log(#{event})` # <- I cheated.
+    `console.log(#{event})`
     if (event.page_x && event.page_y)
       x = event.page_x;
       y = event.page_y;
@@ -117,13 +122,3 @@ class Grid
 end
 
 grid = Grid.new
-puts "Grid height: #{grid.height}"
-puts "Grid width: #{grid.width}"
-puts "Grid canvas: #{grid.canvas}"
-# puts "Grid canvas.inspect: #{grid.canvas.inspect}"
-# `console.log(#{grid.canvas.inspect})`
-# puts grid.canvas.klass
-# puts JSON.stringify(grid.canvas)
-grid.draw_canvas
-grid.add_mouse_event_listener
-# grid.addEventListener("onclick", `alert("clicked")`, false)
