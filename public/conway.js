@@ -19148,6 +19148,12 @@ if (n == null) n = nil;
 
     Opal.cdecl($scope, 'CELL_WIDTH', 15);
 
+    Opal.defn(self, '$canvas_id', function() {
+      var self = this;
+
+      return "conwayCanvas";
+    });
+
     Opal.defn(self, '$initialize', function() {
       var self = this;
 
@@ -19159,7 +19165,7 @@ if (n == null) n = nil;
       return self.max_y = ($rb_divide(self.$width(), $scope.get('CELL_WIDTH'))).$floor();
     });
 
-    Opal.defn(self, '$draw_canvas', function() {
+    return (Opal.defn(self, '$draw_canvas', function() {
       var $a, $b, self = this, x = nil, y = nil;
 
       self.$canvas().width  = self.$width();
@@ -19176,15 +19182,10 @@ if (n == null) n = nil;
       y = $rb_plus(y, $scope.get('CELL_HEIGHT'));};
       self.$context().strokeStyle = "#eee";
       return self.$context().stroke();
-    });
-
-    return (Opal.defn(self, '$canvas_id', function() {
-      var self = this;
-
-      return "conwayCanvas";
-    }), nil) && 'canvas_id';
+    }), nil) && 'draw_canvas';
   })($scope.base, null);
   grid = $scope.get('Grid').$new();
+  self.$puts("Grid height: " + (grid.$height()));
   self.$puts("Grid width: " + (grid.$width()));
   return grid.$draw_canvas();
 })(Opal);
